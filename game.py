@@ -39,8 +39,8 @@ def winProbability(ra, rb, n):
 
     return winsA / n
 
-def readList():
-    with open('test.csv', 'r') as csvfile:
+def readList(file):
+    with open(file) as csvfile:
         reader = csv.reader(csvfile)
         next(reader)
 
