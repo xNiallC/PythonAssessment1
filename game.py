@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 
 #random.seed(57)
 
-
 scoreA = 0
 scoreB = 0
 
@@ -14,16 +13,19 @@ def game(ra, rb):
     global scoreA
     global scoreB
 
-    plotPointsNormal.append(scoreA + scoreB)
+    plotPointsNormal.append(scoreA + scoreB) # For the plotting in a later question
 
-    prob = float(ra) / (ra + rb)
+    prob = float(ra) / (ra + rb) # Standard probability calculation
 
     if (scoreA >= 11 or scoreB >= 11) and math.fabs(scoreA - scoreB) >= 2:
+        # Checks if someone has got to 11 or greater, and they win by 2 clear points
+        # Using math.fabs to check if the leader is winning by 2 clear points
         result = (scoreA, scoreB)
         scoreA = scoreB = 0
         return result
 
     if random.random() < prob:
+    # Pseudo-random scoring system weighted on the probability that adds 1 each time
         scoreA += 1
     else:
         scoreB += 1
@@ -48,7 +50,7 @@ def readList(file):
 
 def makePlot(probList):
     probabilities = [float(row[0]) / (row[0] + row[1]) for row in probList]
-    skill = [row[0] / row[1] for row in probList]
+    skill = [float(row[0]) / row[1] for row in probList]
 
     plt.plot(skill, probabilities, 'ro')
 
@@ -116,7 +118,7 @@ def makeTimePlot(ra, rb):
     # an English game would be faster than a PARS game as it is to 9 points not 11.
     game(ra, rb)
     englishGame(ra, rb)
-
+    
     plt.plot(plotPointsNormal)
     plt.plot(plotPointsEnglish)
 
@@ -124,4 +126,4 @@ def makeTimePlot(ra, rb):
     plt.ylabel('Combined Score')
     plt.title('Player A: {}, Player B: {}'.format(ra, rb))
     plt.show()
-makePlot(readList("test.csv"))
+makeTimePlot(60, 40)
