@@ -16,7 +16,7 @@ def game(ra, rb):
 
     plotPointsNormal.append(scoreA + scoreB)
 
-    prob = ra / (ra + rb)
+    prob = float(ra) / (ra + rb)
 
     if (scoreA >= 11 or scoreB >= 11) and math.fabs(scoreA - scoreB) >= 2:
         result = (scoreA, scoreB)
@@ -47,7 +47,7 @@ def readList(file):
         return [(int(row[0]), int(row[1])) for row in reader]
 
 def makePlot(probList):
-    probabilities = [row[0] / (row[0] + row[1]) for row in probList]
+    probabilities = [float(row[0]) / (row[0] + row[1]) for row in probList]
     skill = [row[0] / row[1] for row in probList]
 
     plt.plot(skill, probabilities, 'ro')
@@ -61,13 +61,13 @@ def makePlot(probList):
 # repeated games the overall probability increases
 def simulateUntilProbability(ra, rb, desiredProb):
     i = 1 # Start with 1 game
-    prob = ra / (ra + rb) # Calculate base probability of A winning
-
+    prob = float(ra) / (ra + rb)
+    print(prob) # Calculate base probability of A winning
     # As long as the probability of a winning "i" games is lower than the desired probability
     # increase count of games played
     while 1 - prob ** i < desiredProb:
         i += 1
-
+    print(i)
     return i
 #print(simulateUntilProbability(60, 40, 0.9))
 
@@ -81,7 +81,7 @@ def englishGame(ra, rb, isA = True, nRallies = 0):
 
     plotPointsEnglish.append(scoreA + scoreB)
 
-    prob = ra / (ra + rb)
+    prob = float(ra) / (ra + rb)
     prob = prob if isA else 1 - prob
 
     # we neglect who hits 8 first for the sake simplicity because either way playUntilDecision is random
@@ -124,4 +124,4 @@ def makeTimePlot(ra, rb):
     plt.ylabel('Combined Score')
     plt.title('Player A: {}, Player B: {}'.format(ra, rb))
     plt.show()
-makePlot(readList())
+makePlot(readList("test.csv"))
